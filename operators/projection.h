@@ -19,7 +19,7 @@
 
 #include <vector>
 #include <string>
-#include "../relation.h"
+#include "../base/relation.h"
 
 // Copyright (c) 2005 Wei-keng Liao
 // Copyright (c) 2011 Serban Giuroiu

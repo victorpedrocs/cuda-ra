@@ -14,9 +14,9 @@
  *
  * =====================================================================================
  */
-#include "readers.h"
-#include "relation.h"
-#include "catalog.h"
+#include "base/readers.h"
+#include "base/relation.h"
+#include "base/catalog.h"
 #include "operators/projection.h"
 
 int main(int argc, char const *argv[])

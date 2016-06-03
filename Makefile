@@ -9,17 +9,17 @@ CFLAGS = -Wall -c $(DEBUG)
 
 #############################
 
-util.o : util.h util.cpp
-	$(CC) $(CFLAGS) util.cpp
+util.o : base/util.h base/util.cpp
+	$(CC) $(CFLAGS)  base/util.cpp
 
-readers.o : readers.h readers.cpp
-	$(CC) $(CFLAGS) readers.cpp
+readers.o : base/readers.h base/readers.cpp
+	$(CC) $(CFLAGS) base/readers.cpp
 
-relation.o : relation.h relation.cpp
-	$(CC) $(CFLAGS) relation.cpp
+relation.o : base/relation.h base/relation.cpp
+	$(CC) $(CFLAGS) base/relation.cpp
 
-catalog.o : catalog.h catalog.cpp
-	$(CC) $(CFLAGS) catalog.cpp
+catalog.o : base/catalog.h base/catalog.cpp
+	$(CC) $(CFLAGS) base/catalog.cpp
 
 projection.o : operators/projection.h operators/projection.cpp
 	$(CC) $(CFLAGS) operators/projection.cpp

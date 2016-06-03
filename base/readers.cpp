@@ -15,7 +15,6 @@
  * =====================================================================================
  */
 #include "readers.h"
-#include "util.h"
 
 vector< vector<string> > lerAlunos() {
 	const string filePath = "data/Alunos.txt";

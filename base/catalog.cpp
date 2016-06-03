@@ -15,7 +15,6 @@
  * =====================================================================================
  */
 #include "catalog.h"
-#include "readers.h"
 
 Catalogo::Catalogo() {
 	this->itbi = prepararITBI();

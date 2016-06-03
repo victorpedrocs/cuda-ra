@@ -21,6 +21,7 @@
 #include <vector>
 #include <iostream>
 #include "relation.h"
+#include "readers.h"
 
 using namespace std;
 
