@@ -20,6 +20,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,10 +33,11 @@ public:
 	Relation& addColumn(string);
 	void addTupla(vector<string>);
 	int nOfColumns();
+	void setHeaders(vector<string>);
+
 	int size();
-	
+	vector<string> getHeaders();
 	vector< vector<string> > getTuplas();
-	
 	string getColumnName(int);
 	vector<string> getTupla(int);
 

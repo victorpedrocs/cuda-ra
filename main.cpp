@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
 	Catalogo catalog;
 	Relation ITBI = catalog.getIBTIRelation();
 
-	int cols[3] = {3,4,6};
+	int cols[2] = {1,2};
 	vector<int> colunas(cols, cols + sizeof(cols) / sizeof(int) );
 	Relation projection = project(ITBI, colunas);
 

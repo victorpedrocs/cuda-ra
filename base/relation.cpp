@@ -55,3 +55,11 @@ vector<string> Relation::getTupla(int index) {
 	return this->tuplas[index];
 }
 
+void Relation::setHeaders( vector<string> headers ) {
+	this->colNames.clear();
+	copy(headers.begin(), headers.end(), this->colNames.end());
+}
+
+vector<string> Relation::getHeaders() {
+	return this->colNames;
+}

@@ -21,6 +21,8 @@
 #include <string>
 #include "../base/relation.h"
 
+using namespace std;
+
 // Copyright (c) 2005 Wei-keng Liao
 // Copyright (c) 2011 Serban Giuroiu
 #define msg(format, ...) do { fprintf(stderr, format, ##__VA_ARGS__); } while (0)
@@ -30,6 +32,8 @@
 // Copyright (c) 2005 Wei-keng Liao
 // Copyright (c) 2011 Serban Giuroiu
 #ifdef __CUDACC__
+#include <thrust/device_vector.h>
+
 inline void checkCuda(cudaError_t e) {
     if (e != cudaSuccess) {
         // cudaGetErrorString() isn't always very helpful. Look up the error
