@@ -33,7 +33,6 @@ vector<string> splitString( string text, char delim ) {
 		}
 		else if (buf.length() > 0) {
 			array.push_back(buf);
-			cout << buf << endl;
 			buf = "";		
 		}
 	}

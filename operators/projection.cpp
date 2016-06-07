@@ -25,8 +25,8 @@ Relation project(Relation inputRelation, vector<int> columns) {
 	}
 
 	for(int i = 0; i < inputRelation.size(); i++){
-		vector<string> tupla = inputRelation.getTupla(i);
-		vector<string> newTupla;
+		vector<float> tupla = inputRelation.getTupla(i);
+		vector<float> newTupla;
 
 		for(int j = 0; j < columns.size(); j++){
 			int columnIndex = columns[j];

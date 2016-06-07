@@ -1,4 +1,7 @@
-main
+cpu
+cuda
 # Object files
 *.o
 .DS_Store
+cpu.dSYM/
+cuda.dSYM/

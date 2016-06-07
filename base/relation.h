@@ -27,19 +27,19 @@ using namespace std;
 class Relation {
 private:
 	vector<string> colNames;
-	vector< vector<string> > tuplas;
+	vector< vector<float> > tuplas;
 
 public:
 	Relation& addColumn(string);
-	void addTupla(vector<string>);
+	void addTupla(vector<float>);
 	int nOfColumns();
 	void setHeaders(vector<string>);
 
 	int size();
 	vector<string> getHeaders();
-	vector< vector<string> > getTuplas();
+	vector< vector<float> > getTuplas();
 	string getColumnName(int);
-	vector<string> getTupla(int);
+	vector<float> getTupla(int);
 
 	Relation();
 	~Relation();

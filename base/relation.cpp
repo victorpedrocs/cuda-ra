@@ -31,7 +31,7 @@ Relation& Relation::addColumn(string colName) {
 	return *this;
 }
 
-void Relation::addTupla(vector<string> tupla) {
+void Relation::addTupla(vector<float> tupla) {
 	this->tuplas.push_back(tupla);
 }
 
@@ -43,7 +43,7 @@ int Relation::size() {
 	return this->tuplas.size();
 }
 
-vector< vector<string> > Relation::getTuplas() {
+vector< vector<float> > Relation::getTuplas() {
 	return this->tuplas;
 }
 
@@ -51,7 +51,7 @@ string Relation::getColumnName(int index) {
 	return this->colNames[index];
 }
 
-vector<string> Relation::getTupla(int index) {
+vector<float> Relation::getTupla(int index) {
 	return this->tuplas[index];
 }
 
