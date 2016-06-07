@@ -29,8 +29,15 @@ __global__ void projectColumns ( float		*tupla,
 }
 
 Relation project( Relation inputRelation, vector<int> columns ) {
+	
+	cudaEvent_t start, stop;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
+	float totalMillis = 0;
+
 	Relation outputRelation;
 	vector<float> h_outputRelationHeaders;
+
 
 	for(int i = 0; i < columns.size(); i++){
 		int colIndex = columns[i];
@@ -48,13 +55,25 @@ Relation project( Relation inputRelation, vector<int> columns ) {
 		float *ptr_tupla = thrust::raw_pointer_cast( d_tupla.data() );
 		float *ptr_newTupla = thrust::raw_pointer_cast( d_newTupla.data() );
 
+		checkCuda(cudaEventRecord(start));
 		projectColumns<<< 1, columns.size() >>>( ptr_tupla, ptr_newTupla, ptr_columns, columns.size() );
+		checkCuda(cudaEventRecord(stop));
 
 		thrust::copy( d_newTupla.begin(), d_newTupla.end(), h_newTupla.begin() );
 
 
 		outputRelation.addTupla( h_newTupla );
+
+		checkCuda(cudaEventSynchronize(stop));
+		float milliseconds = 0;
+		checkCuda(cudaEventElapsedTime(&milliseconds, start, stop));
+		totalMillis += milliseconds;
 	}
+
+	checkCuda( cudaEventDestroy( start ) );
+	checkCuda( cudaEventDestroy( stop ) );
+	float seconds = totalMillis/1000;
+	cout << "GPU Time: " << seconds << endl;
 
 	return outputRelation;
 

@@ -27,6 +27,7 @@
 using namespace std;
 
 Relation prepararITBI();
+Relation prepararITBI(int);
 
 class Catalogo {
 private:
@@ -36,6 +37,7 @@ public:
 	Relation getIBTIRelation();
 	
 	Catalogo();
+	Catalogo(int);
 	~Catalogo();
 
 };

@@ -20,6 +20,10 @@ Catalogo::Catalogo() {
 	this->itbi = prepararITBI();
 }
 
+Catalogo::Catalogo(int relationSize) {
+	this->itbi = prepararITBI();
+}
+
 Catalogo::~Catalogo() {}
 
 Relation Catalogo::getIBTIRelation() {
@@ -27,19 +31,23 @@ Relation Catalogo::getIBTIRelation() {
 }
 
 Relation prepararITBI() {
+	return prepararITBI(-1);
+}
+
+Relation prepararITBI(int size) {
 	Relation itbiRelation;
 	vector< vector<string> > dadosITBI = lerDadosITBI();
-	
-	/*for(int i = 0; i < dadosITBI[0].size(); i++) {
-		itbiRelation.addColumn(dadosITBI[0][i]);
-	}*/
+
+	if(size < 1 || size > dadosITBI.size() ){
+		size = dadosITBI.size(); 
+	}
 
 	itbiRelation.addColumn(dadosITBI[0][0])
 		.addColumn(dadosITBI[0][1])
 		.addColumn(dadosITBI[0][5])
 		.addColumn(dadosITBI[0][6]);
 
-	for(int i = 1; i < dadosITBI.size(); i++) {
+	for(int i = 1; i < size; i++) {
 		vector<float> newTupla;
 
 		newTupla.push_back( atof(dadosITBI[i][0].c_str()) );

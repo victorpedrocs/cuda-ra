@@ -20,10 +20,21 @@
 #include "base/catalog.h"
 #include "operators/projection.h"
 #include "wtime.h"
+#include <unistd.h>     /* getopt() */
 
 int main(int argc, char const *argv[])
 {
-	Catalogo catalog;
+
+	int size;
+
+	if(argc > 1){
+		size = atoi(argv[1]);
+	}
+	else {
+		size = -1;
+	}
+
+	Catalogo catalog(size);
 	Relation ITBI = catalog.getIBTIRelation();
 
 	int cols[2] = {1,2};
