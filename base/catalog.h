@@ -19,7 +19,6 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
 #include <stdlib.h>
 #include "relation.h"
 #include "readers.h"

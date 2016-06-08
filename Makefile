@@ -4,7 +4,8 @@ READER = util.o readers.o main.o
 DEBUG = -g -pg
 LFLAGS = $(DEBUG)
 CFLAGS = -c $(DEBUG) $(OPTFLAGS)
-NVCCFLAGS   = $(CFLAGS) -gencode arch=compute_11,code=sm_11
+NVCCFLAGS   = $(CFLAGS) 
+#-gencode arch=compute_11,code=sm_11
 
 CC = g++
 NVCC = nvcc

@@ -18,7 +18,6 @@
 #define READERS_H
 
 #include <vector>
-#include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>

@@ -15,12 +15,11 @@
  * =====================================================================================
  */
 #include <iomanip>
+#include <iostream>
 #include "base/readers.h"
 #include "base/relation.h"
 #include "base/catalog.h"
 #include "operators/projection.h"
-#include "wtime.h"
-#include <unistd.h>     /* getopt() */
 
 int main(int argc, char const *argv[])
 {
@@ -40,14 +39,7 @@ int main(int argc, char const *argv[])
 	int cols[2] = {1,2};
 	vector<int> colunas(cols, cols + sizeof(cols) / sizeof(int) );
 
-	double timing;
-	double projection_time = wtime();
-
 	Relation projection = project(ITBI, colunas);
 
-	timing = wtime();
-	projection_time = timing - projection_time;
-	
-	cout << "Projection time: " << setprecision(5) << projection_time << endl;
 	return 0;
 }

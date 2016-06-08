@@ -16,15 +16,19 @@
  */
 #include "projection.h"
 
-__global__ void projectColumns ( float		*tupla,
-								 float		*novaTupla,
-								 int		*colunas,
-								 int 		size )
+__global__ void projectColumns ( float		*oldRelation,
+								 float		*newRelation,
+								 int		*columns,
+								 int 		sizeAllTuplas,
+								 int 		columnsSize,
+								 int 		tuplaSize )
 {
 	int i = blockIdx.x * blockDim.x + threadIdx.x;
-	if (i < size)
-	{
-		novaTupla[i] = tupla[ colunas[i] ];
+	if ( i < sizeAllTuplas ) {
+		int iTupla = i/tuplaSize;
+		for (int it = 0; it < columnsSize; it++) {
+			newRelation[it + iTupla] = oldRelation[ columns[it] + iTupla ];
+		}
 	}
 }
 
@@ -38,42 +42,58 @@ Relation project( Relation inputRelation, vector<int> columns ) {
 	Relation outputRelation;
 	vector<float> h_outputRelationHeaders;
 
-
+	// Copia os headers para a nova relação
 	for(int i = 0; i < columns.size(); i++){
 		int colIndex = columns[i];
 		outputRelation.addColumn( inputRelation.getColumnName(colIndex));
 	}
+	
+	const unsigned int sizeAllTuplas = inputRelation.size() * inputRelation.getHeaders().size();
+	const unsigned int relationSize = inputRelation.size();
+	const unsigned int tuplaSize = inputRelation.getHeaders().size();
 
-	thrust::device_vector<int> d_columns(columns);
+	thrust::host_vector<float> h_oldRelation(sizeAllTuplas, 0);
+	thrust::device_vector<int> d_columns(columns);	
+	thrust::device_vector<float> d_oldRelation( sizeAllTuplas );
+	thrust::device_vector<float> d_newRelation( inputRelation.size() * columns.size(), 0 );
+	
+	for (int i = 0; i < sizeAllTuplas; i++) {
+		int tuplaIndex = i/tuplaSize;
+		int col = i%tuplaSize;
+		h_oldRelation[i] = inputRelation.getTupla(tuplaIndex)[col];
+	}
+	thrust::copy( h_oldRelation.begin(), h_oldRelation.end(), d_oldRelation.begin() );
+
 	int *ptr_columns = thrust::raw_pointer_cast( d_columns.data() );
+	float *ptr_oldRelation = thrust::raw_pointer_cast( d_oldRelation.data() );
+	float *ptr_newRelation = thrust::raw_pointer_cast( d_newRelation.data() );
 
-	for(int i = 0; i < inputRelation.size(); i++){
-		thrust::device_vector<float> d_tupla( inputRelation.getTupla(i) );
-		thrust::device_vector<float> d_newTupla(columns.size(), 0);
-		vector<float> h_newTupla(columns.size(), 0);
-
-		float *ptr_tupla = thrust::raw_pointer_cast( d_tupla.data() );
-		float *ptr_newTupla = thrust::raw_pointer_cast( d_newTupla.data() );
-
-		checkCuda(cudaEventRecord(start));
-		projectColumns<<< 1, columns.size() >>>( ptr_tupla, ptr_newTupla, ptr_columns, columns.size() );
-		checkCuda(cudaEventRecord(stop));
-
-		thrust::copy( d_newTupla.begin(), d_newTupla.end(), h_newTupla.begin() );
+ 	const unsigned int numThreadsPerClusterBlock = 256;
+    const unsigned int numClusterBlocks = (sizeAllTuplas + numThreadsPerClusterBlock - 1) / numThreadsPerClusterBlock;
 
 
-		outputRelation.addTupla( h_newTupla );
+    checkCuda(cudaEventRecord(start));
+	projectColumns
+		<<< numClusterBlocks, numThreadsPerClusterBlock >>>
+		( ptr_oldRelation, ptr_newRelation, ptr_columns, sizeAllTuplas, columns.size(), tuplaSize );
+	checkCuda(cudaEventRecord(stop));
+	checkCuda(cudaEventSynchronize(stop));
 
-		checkCuda(cudaEventSynchronize(stop));
-		float milliseconds = 0;
-		checkCuda(cudaEventElapsedTime(&milliseconds, start, stop));
-		totalMillis += milliseconds;
+	thrust::host_vector<float> h_newRelation( d_newRelation );
+	vector< vector<float> > newTuplas(relationSize);
+	for (int i = 0; i < sizeAllTuplas; i++)
+	{
+		int tuplaIndex = i/tuplaSize;
+		newTuplas[tuplaIndex].push_back(h_newRelation[i]);
 	}
 
+	outputRelation.setTuplas(newTuplas);
+
+	checkCuda(cudaEventElapsedTime(&totalMillis, start, stop));
 	checkCuda( cudaEventDestroy( start ) );
 	checkCuda( cudaEventDestroy( stop ) );
-	float seconds = totalMillis/1000;
-	cout << "GPU Time: " << seconds << endl;
+	double seconds = totalMillis/1000;
+	cout << fixed << seconds << endl;
 
 	return outputRelation;
 

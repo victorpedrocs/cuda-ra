@@ -19,7 +19,10 @@
 
 #include <vector>
 #include <string>
+#include <iomanip> // std::setprecision()
+#include <iostream>
 #include "../base/relation.h"
+#include "../wtime.h"
 
 using namespace std;
 

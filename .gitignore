@@ -5,3 +5,4 @@ cuda
 .DS_Store
 cpu.dSYM/
 cuda.dSYM/
+*.out

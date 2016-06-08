@@ -34,7 +34,8 @@ public:
 	void addTupla(vector<float>);
 	int nOfColumns();
 	void setHeaders(vector<string>);
-
+	void setTuplas(vector< vector<float> >);
+	
 	int size();
 	vector<string> getHeaders();
 	vector< vector<float> > getTuplas();

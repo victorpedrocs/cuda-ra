@@ -24,6 +24,9 @@ Relation project(Relation inputRelation, vector<int> columns) {
 		outputRelation.addColumn( inputRelation.getColumnName(colIndex));
 	}
 
+	double timing;
+	double projection_time = wtime();
+
 	for(int i = 0; i < inputRelation.size(); i++){
 		vector<float> tupla = inputRelation.getTupla(i);
 		vector<float> newTupla;
@@ -34,6 +37,11 @@ Relation project(Relation inputRelation, vector<int> columns) {
 		}
 		outputRelation.addTupla(newTupla);
 	}
+
+	timing = wtime();
+	projection_time = timing - projection_time;
+	
+	cout << setprecision(5) << projection_time << endl;
 
 	return outputRelation;
 }

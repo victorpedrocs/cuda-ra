@@ -31,6 +31,12 @@ Relation& Relation::addColumn(string colName) {
 	return *this;
 }
 
+void Relation::setTuplas( vector<vector<float> > tuplas ) {
+	this->tuplas.clear();
+	this->tuplas.resize(tuplas.size());
+	copy(tuplas.begin(), tuplas.end(), this->tuplas.begin());
+}
+
 void Relation::addTupla(vector<float> tupla) {
 	this->tuplas.push_back(tupla);
 }
