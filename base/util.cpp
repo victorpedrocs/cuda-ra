@@ -33,7 +33,7 @@ vector<string> splitString( string text, char delim ) {
 		}
 		else if (buf.length() > 0) {
 			array.push_back(buf);
-			buf = "";		
+			buf = "";
 		}
 	}
 	if ( !buf.empty() ) {
@@ -41,3 +41,7 @@ vector<string> splitString( string text, char delim ) {
 	}
     return array;
 }
+
+// bool cotains(Relation relation, Tupla tupla) {
+// 	// TODO
+// }

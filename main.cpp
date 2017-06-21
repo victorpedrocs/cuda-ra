@@ -25,6 +25,7 @@ int main(int argc, char const *argv[])
 {
 
 	int size;
+	double time, stop;
 
 	if(argc > 1){
 		size = atoi(argv[1]);
@@ -34,12 +35,23 @@ int main(int argc, char const *argv[])
 	}
 
 	Catalogo catalog(size);
-	Relation ITBI = catalog.getIBTIRelation();
+	Relation relation = catalog.getFacialRelation();
 
-	int cols[2] = {1,2};
+	time = wtime();
+	int cols[4] = {1,2,5,6};
 	vector<int> colunas(cols, cols + sizeof(cols) / sizeof(int) );
+	Relation projection = project(relation, colunas);
 
-	Relation projection = project(ITBI, colunas);
+	for(int i = 0; i < projection.size(); i++){
+		for(int j = 0; j < projection.getTupla(i).size() ; j++){
+			cout << projection.getTupla(i)[j] << ", ";
+		}
+		cout << endl;
+	}
 
+	stop = wtime();
+	time = stop - time;
+
+	cout << "TOTAL time =\t" << time << endl;
 	return 0;
 }

@@ -68,11 +68,11 @@ Relation project( Relation inputRelation, vector<int> columns ) {
 	float *ptr_oldRelation = thrust::raw_pointer_cast( d_oldRelation.data() );
 	float *ptr_newRelation = thrust::raw_pointer_cast( d_newRelation.data() );
 
- 	const unsigned int numThreadsPerClusterBlock = 256;
-    const unsigned int numClusterBlocks = (sizeAllTuplas + numThreadsPerClusterBlock - 1) / numThreadsPerClusterBlock;
-
-
-    checkCuda(cudaEventRecord(start));
+	const unsigned int numThreadsPerClusterBlock = 256;
+	const unsigned int numClusterBlocks = (sizeAllTuplas + numThreadsPerClusterBlock - 1) / numThreadsPerClusterBlock;
+	
+	cout << "Chegou no Kernel" << endl;
+	checkCuda(cudaEventRecord(start));
 	projectColumns
 		<<< numClusterBlocks, numThreadsPerClusterBlock >>>
 		( ptr_oldRelation, ptr_newRelation, ptr_columns, sizeAllTuplas, columns.size(), tuplaSize );
@@ -93,7 +93,7 @@ Relation project( Relation inputRelation, vector<int> columns ) {
 	checkCuda( cudaEventDestroy( start ) );
 	checkCuda( cudaEventDestroy( stop ) );
 	double seconds = totalMillis/1000;
-	cout << fixed << seconds << endl;
+	printf("GPU Time =\t%f\n", seconds);
 
 	return outputRelation;
 

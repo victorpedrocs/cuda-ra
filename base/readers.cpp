@@ -99,3 +99,22 @@ vector< vector<string> > lerDadosITBI() {
 
 	return itbi;
 }
+
+vector< vector<string> > lerFacialAffirmative() {
+	const string filePath = "data/grammatical_facial_expression/a_affirmative_datapoints.txt";
+	vector< vector<string> > facial;
+	facial.clear();
+
+	ifstream file(filePath.data());
+
+	if(file) {
+		for( string line; getline(file, line) ;) {
+			vector<string> fields = splitString(line, ',');
+			facial.push_back(fields);
+		}
+	}
+
+	return facial;
+}
+
+

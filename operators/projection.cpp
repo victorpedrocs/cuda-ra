@@ -1,16 +1,16 @@
-/*
+/**
  * =====================================================================================
  *
  *       Filename:  projection.cpp
  *
  *    Description:  Este arquivo contem a implementacao do operador projection em CPU
  *
- *        Version:  1.0
+ *        @version  1.0
  *        Created:  06/02/16 08:53:12
  *       Revision:  none
  *       Compiler:  g++
  *
- *         Author:  Victor Silva
+ *         @author  Victor Silva
  *
  * =====================================================================================
  */
@@ -18,14 +18,14 @@
 
 Relation project(Relation inputRelation, vector<int> columns) {
 	Relation outputRelation;
-
+	double start, stop, elapsed;
 	for(int i = 0; i < columns.size(); i++){
 		int colIndex = columns[i];
 		outputRelation.addColumn( inputRelation.getColumnName(colIndex));
 	}
 
-	double timing;
-	double projection_time = wtime();
+	
+	start = wtime();
 
 	for(int i = 0; i < inputRelation.size(); i++){
 		vector<float> tupla = inputRelation.getTupla(i);
@@ -38,10 +38,10 @@ Relation project(Relation inputRelation, vector<int> columns) {
 		outputRelation.addTupla(newTupla);
 	}
 
-	timing = wtime();
-	projection_time = timing - projection_time;
+	stop = wtime();
+	elapsed = stop - start;
 	
-	cout << setprecision(5) << projection_time << endl;
+	cout << setprecision(5) << "CPU Time =\t" << elapsed << endl;
 
 	return outputRelation;
 }

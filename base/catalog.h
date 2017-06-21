@@ -27,13 +27,22 @@ using namespace std;
 
 Relation prepararITBI();
 Relation prepararITBI(int);
+Relation prepararFacialAffirmative();
+Relation prepararFacialAffirmative(int);
 
 class Catalogo {
 private:
 	Relation itbi;
+	Relation facialAffirmative;
+	bool isFacialInitialized;
+	bool isItbiInitialized;
+	int relationSize;
+
+	void initializeFields();
 public:
 	
 	Relation getIBTIRelation();
+	Relation getFacialRelation();
 	
 	Catalogo();
 	Catalogo(int);

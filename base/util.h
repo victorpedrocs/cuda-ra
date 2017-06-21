@@ -21,11 +21,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "relation.h"
+#include "tupla.h"
 
 using namespace std;
 
 /*-------- METHODS --------*/
 vector<string> splitString(string, char);
+// bool contains(Relation, Tupla);
 
 /*-------- CONSTANTS --------*/
 struct Constants {

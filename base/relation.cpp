@@ -41,6 +41,10 @@ void Relation::addTupla(vector<float> tupla) {
 	this->tuplas.push_back(tupla);
 }
 
+void Relation::removeTupla(int index) {
+	this->tuplas.erase(this->tuplas.begin()+index);
+}
+
 int Relation::nOfColumns() {
 	return this->colNames.size();
 }

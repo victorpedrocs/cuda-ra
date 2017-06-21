@@ -32,5 +32,6 @@ vector< vector<string> > lerCursos();
 vector< vector<string> > lerDisciplinas();
 vector< vector<string> > lerDisciplinaHistorico();
 vector< vector<string> > lerDadosITBI();
+vector< vector<string> > lerFacialAffirmative();
 
 #endif

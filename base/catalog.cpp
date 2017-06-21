@@ -16,30 +16,46 @@
  */
 #include "catalog.h"
 
+void Catalogo::initializeFields() {
+	cout << "Novo catalogo" << endl;
+	this->isItbiInitialized = false;
+	this->isFacialInitialized = false;
+}
+
 Catalogo::Catalogo() {
-	this->itbi = prepararITBI();
+	this->relationSize = -1;
+	this->initializeFields();
 }
 
 Catalogo::Catalogo(int relationSize) {
-	this->itbi = prepararITBI();
+	this->relationSize = relationSize;
+	this->initializeFields();
 }
 
 Catalogo::~Catalogo() {}
 
 Relation Catalogo::getIBTIRelation() {
+	if(!this->isItbiInitialized){
+		this->itbi = prepararITBI(this->relationSize);
+		this->isItbiInitialized = true;
+	}
 	return this->itbi;
 }
 
-Relation prepararITBI() {
-	return prepararITBI(-1);
+Relation Catalogo::getFacialRelation() {
+	if(!this->isFacialInitialized){
+		this->facialAffirmative = prepararFacialAffirmative(this->relationSize);
+		this->isFacialInitialized = true;
+	}
+	return this->facialAffirmative;
 }
 
 Relation prepararITBI(int size) {
 	Relation itbiRelation;
 	vector< vector<string> > dadosITBI = lerDadosITBI();
 
-	if(size < 1 || size > dadosITBI.size() ){
-		size = dadosITBI.size(); 
+	if( size < 1 || size > dadosITBI.size() ) {
+		size = dadosITBI.size();
 	}
 
 	itbiRelation.addColumn(dadosITBI[0][0])
@@ -60,3 +76,39 @@ Relation prepararITBI(int size) {
 
 	return itbiRelation;
 }
+
+Relation prepararFacialAffirmative(int size) {
+	cout << "Preparar facial affirmative" << endl;
+	Relation facial;
+	vector< vector<string> > dadosFacial = lerFacialAffirmative();
+
+	if( size < 1 || size > 1000 ) {
+		size = 1000;
+	}
+
+	cout << "Inicializa headers" << endl;
+	cout << "Header" << endl;
+	for(int i = 0; i < dadosFacial[0].size(); i++) {
+		cout << dadosFacial[0][i] << " ";
+		facial.addColumn(dadosFacial[0][i]);
+	}
+	cout << endl;
+
+	cout << "le arquivo, " << size << " instancias" << endl;
+	for(int i = 1; i < size; i++) {
+		vector<float> tupla;
+		cout << "Linha " << i << endl;
+		cout << "dadosfacial[i].size = " << dadosFacial[i].size() << endl;
+		cout << "dadosfacial[i][0] = " << dadosFacial[i][0] << endl;
+		for(int j = 0; dadosFacial[i].size(); j++) {
+			cout << dadosFacial[i][j] << " ";
+			tupla.push_back( atof( dadosFacial[i][j].c_str() ) );
+		}
+		cout << endl;
+		facial.addTupla(tupla);
+	}
+
+	cout << "Retorna relacao pronta" << endl;
+	return facial;
+}
+

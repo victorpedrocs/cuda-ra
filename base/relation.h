@@ -32,6 +32,7 @@ private:
 public:
 	Relation& addColumn(string);
 	void addTupla(vector<float>);
+	void removeTupla(int);
 	int nOfColumns();
 	void setHeaders(vector<string>);
 	void setTuplas(vector< vector<float> >);

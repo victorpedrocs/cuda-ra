@@ -4,19 +4,18 @@ READER = util.o readers.o main.o
 DEBUG = -g -pg
 LFLAGS = $(DEBUG)
 CFLAGS = -c $(DEBUG) $(OPTFLAGS)
-NVCCFLAGS   = $(CFLAGS) 
-#-gencode arch=compute_11,code=sm_11
+NVCCFLAGS   = $(CFLAGS) -gencode arch=compute_11,code=sm_11
 
 CC = g++
 NVCC = nvcc
 
 #############################
 
-CPU_OBJ = 	cpu_util.o cpu_readers.o 		\
+CPU_OBJ = 	cpu_util.o cpu_readers.o 			\
 				cpu_relation.o cpu_catalog.o 	\
 				cpu_main.o cpu_projection.o cpu_wtime.o
 
-GPU_OBJ = 	gpu_util.o gpu_readers.o 		\
+GPU_OBJ = 	gpu_util.o gpu_readers.o 			\
 				gpu_relation.o gpu_catalog.o	\
 				gpu_main.o gpu_projection.o gpu_wtime.o
 
