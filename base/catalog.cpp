@@ -13,13 +13,14 @@
  *         Author:  Victor Silva
  *
  * =====================================================================================
- */
+ */	
 #include "catalog.h"
 
 void Catalogo::initializeFields() {
 	cout << "Novo catalogo" << endl;
 	this->isItbiInitialized = false;
 	this->isFacialInitialized = false;
+	this->relations.clear();
 }
 
 Catalogo::Catalogo() {
@@ -111,4 +112,23 @@ Relation prepararFacialAffirmative(int size) {
 	cout << "Retorna relacao pronta" << endl;
 	return facial;
 }
+
+void Catalogo::createRelation(string name, string pathToCsv) {
+	Relation newRelation(name);
+	vector< vector<string> > rows = readCsv(pathToCsv);
+	
+	// Add columns
+	for(int i = 0; i < rows[0].size(); i++) {
+		vector<string> colNameType = splitString(rows[0][i], ':');
+		newRelation.addColumn(colNameType[0], colNameType[1]);
+	}
+
+	// Add tuples
+	for(int i = 1; i < rows.size(); i++) {
+		newRelation.addTuple(rows[i]);
+	}
+
+}
+
+
 

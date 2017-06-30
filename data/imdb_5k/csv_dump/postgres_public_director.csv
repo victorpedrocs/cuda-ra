@@ -1,3 +1,4 @@
+id:int,name:string,facebook_likes:int
 1,Aaron Hann,0
 2,Aaron Schneider,11
 3,Aaron Seltzer,64

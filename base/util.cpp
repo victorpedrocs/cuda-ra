@@ -31,7 +31,7 @@ vector<string> splitString( string text, char delim ) {
 		if ( text[i] != delim ) {
 			buf += text[i];
 		}
-		else if (buf.length() > 0) {
+		else {
 			array.push_back(buf);
 			buf = "";
 		}

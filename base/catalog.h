@@ -38,8 +38,13 @@ private:
 	bool isItbiInitialized;
 	int relationSize;
 
+	vector<Relation> relations;
+
 	void initializeFields();
 public:
+	void createRelation(string, string);
+	vector<string> getRelationsNames();
+	Relation getRelationByName(string);
 	
 	Relation getIBTIRelation();
 	Relation getFacialRelation();

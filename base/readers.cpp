@@ -117,4 +117,36 @@ vector< vector<string> > lerFacialAffirmative() {
 	return facial;
 }
 
+vector< vector<string> > readActor() {
+	const string filePath = "data/imdb_5k/csv_dump/postgres_public_actor.csv";
+	vector< vector<string> > actors;
+	actors.clear();
+
+	ifstream file(filePath.data());
+
+	if(file) {
+		for( string line; getline(file, line) ;) {
+			vector<string> fields = splitString(line, ',');
+			actors.push_back(fields);
+		}
+	}
+
+	return actors;
+}
+
+vector< vector<string> > readCsv(const string filePath) {
+	vector< vector<string> > rows;
+	rows.clear();
+
+	ifstream file(filePath.data());
+
+	if(file) {
+		for( string line; getline(file, line) ;) {
+			vector<string> columns = splitString(line, ',');
+			rows.push_back(columns);
+		}
+	}
+
+	return rows;
+}
 

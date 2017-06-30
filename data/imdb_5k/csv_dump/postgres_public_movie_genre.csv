@@ -1,3 +1,4 @@
+movie_id:int,genre_id:int
 1,9
 2,4
 2,8

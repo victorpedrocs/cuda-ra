@@ -16,14 +16,41 @@
  */
 #include "relation.h"
 
+void Relation::build(string name) {
+	this->name = name;
+	this->colNames.clear();
+	this->tuplas.clear();
+}
+
 Relation::Relation() {
-	colNames.clear();
-	tuplas.clear();
+	this->build("");
+}
+
+Relation::Relation(string name) {
+	this->build(name);
 }
 
 Relation::~Relation() {
-	colNames.clear();
-	tuplas.clear();
+	this->colNames.clear();
+	this->tuplas.clear();
+}
+
+
+Relation& Relation::addColumn(string name, string type) {
+	this->colNames.push_back(name);
+	if(type == "int" || type == "integer") {
+		this->colTypes.push_back(Relation::INT);
+	}
+	else if( type == "float") {
+		this->colTypes.push_back(Relation::FLOAT);
+	}
+	else if(type == "string") {
+		this->colTypes.push_back(Relation::STRING);
+	}
+	else {
+		cout << "Column Type Unknown" << endl;
+	}
+	return *this;
 }
 
 Relation& Relation::addColumn(string colName) {
@@ -39,6 +66,22 @@ void Relation::setTuplas( vector<vector<float> > tuplas ) {
 
 void Relation::addTupla(vector<float> tupla) {
 	this->tuplas.push_back(tupla);
+}
+
+void Relation::addTuple(vector<string> tuple) {
+	vector<boost::any> newTuple;
+	for(int i = 0; i < tuple.size(); i++) {
+		if(this->colTypes[i] == Relation::INT) {
+			newTuple.push_back(stoi(tuple[i]));
+		}
+		else if (this->colTypes[i] == Relation::FLOAT) {
+			newTuple.push_back(stof(tuple[i]));
+		}
+		else {
+			newTuple.push_back(tuple[i]);
+		}
+	}
+	this->tuples.push_back(newTuple);
 }
 
 void Relation::removeTupla(int index) {
@@ -72,4 +115,8 @@ void Relation::setHeaders( vector<string> headers ) {
 
 vector<string> Relation::getHeaders() {
 	return this->colNames;
+}
+
+vector<Relation::ColType> Relation::getColTypes() {
+	return this->colTypes;
 }

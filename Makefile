@@ -3,10 +3,10 @@ all: cpu gpu
 READER = util.o readers.o main.o 
 DEBUG = -g -pg
 LFLAGS = $(DEBUG)
-CFLAGS = -c $(DEBUG) $(OPTFLAGS)
+CFLAGS = -c -std=c++11 -o $(DEBUG) $(OPTFLAGS)
 NVCCFLAGS   = $(CFLAGS) -gencode arch=compute_11,code=sm_11
 
-CC = g++
+CC = clang++
 NVCC = nvcc
 
 #############################

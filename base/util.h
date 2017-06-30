@@ -22,7 +22,6 @@
 #include <vector>
 #include <string>
 #include "relation.h"
-#include "tupla.h"
 
 using namespace std;
 

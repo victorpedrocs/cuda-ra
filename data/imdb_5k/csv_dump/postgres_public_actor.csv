@@ -1,3 +1,4 @@
+id:int,name:string,facebook_likes:int
 1,50 Cent,1000
 2,Aaliyah,775
 3,Aaron Ashmore,750
